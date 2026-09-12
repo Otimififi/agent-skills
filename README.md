@@ -74,6 +74,7 @@ Additional operator references:
 - [Response shapes](skills/otimififi-site/references/response-shapes.md)
 - [Troubleshooting](skills/otimififi-site/references/troubleshooting.md)
 - [Verification checklist](skills/otimififi-site/references/verification.md)
+- [Image upload example](skills/otimififi-site/examples/upload-images.md)
 
 ## Claude Code Configuration
 

@@ -2,12 +2,21 @@
 
 ## Upload flow
 
-1. `POST /api/v1/media/prepare` `{ name, type, size, website_id? }`
-2. Client uploads bytes to B2 `uploadUrl` with `authorizationToken`
-3. `POST /api/v1/media/:pit` `{ filename, type, size, original_url }`
-4. Use `public_url` in page/website head config
+1. Call `upload_asset_from_path` for a local binary file, or `upload_asset` for
+   text/base64 content.
+2. MCP performs the prepare, B2 transfer, and confirm calls internally.
+3. Use only the returned `public_url` in page HTML or website/page head config.
 
-MCP `upload_asset` performs all steps.
+The B2 `uploadUrl` and `authorizationToken` are temporary internal credentials.
+They must never be returned to the model, placed in HTML, or written to logs.
+
+For an image in page body HTML:
+
+```html
+<img src="https://static.otimififi.com/.../hero.png" alt="Hero">
+```
+
+For CSS/JS, use the same `public_url` in `cssFileLinks` or `jsFileLinks`.
 
 ## Page vs website assets
 
@@ -20,3 +29,10 @@ MCP `upload_asset` performs all steps.
 - CSS always in `<head>`
 - JS: `position: "head" | "body_end"` (default `body_end`)
 - Prefer `defer: true` for body scripts
+
+## Local file policy
+
+`upload_asset_from_path` accepts absolute paths only. The path must resolve
+inside `OTIMIFIFI_ASSET_ROOTS`; when unset, the MCP process working directory
+is the default root. The tool infers common image MIME types from the file
+extension and returns a SHA-256 hash.

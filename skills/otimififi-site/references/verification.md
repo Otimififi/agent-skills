@@ -23,6 +23,10 @@ Use this checklist before publishing a page or reporting it as live.
 - Review `import_report.preflight.extracted`, `.sanitized`, and `.removed`.
 - Confirm no local filesystem paths remain in HTML or asset configuration.
 - Confirm assets use approved URLs and expected MIME types.
+- Upload each local image before writing HTML and use its returned `public_url`
+  in `<img src>`, never the local path or a B2 temporary upload URL.
+- Confirm the image result includes the expected `mime_type`, `size`, and
+  `sha256`; verify the public URL loads before publishing.
 
 ## Preview and Release
 

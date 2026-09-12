@@ -1,11 +1,14 @@
 ---
 name: otimififi-site
-description: Build and publish websites on Otimififi via MCP/API — create sites and pages, upload HTML/CSS/JS static assets, wire head references, and return public URLs. Use when the user wants AI-driven site building, landing pages, or static hosting on Otimififi.
+description: >-
+  Build and publish Otimififi websites via MCP/API, including HTML, assets,
+  and publishing.
 ---
 
 # Otimififi Site Building (AI Users)
 
-Use the **otimififi-site MCP** tools (or equivalent REST calls with `Authorization: Bearer <token>`).
+Use the **otimififi-site MCP** tools or equivalent REST calls with
+`Authorization: Bearer <token>`.
 
 ## Prerequisites
 
@@ -19,10 +22,10 @@ is the preferred path because it provides typed tools and centralizes auth.
 
 ## Default closed loop
 
-```
+```text
 auth_status
   → create_website | list_websites
-  → upload_asset (css/js/images)     # get public_url
+  → upload_asset | upload_asset_from_path (css/js/images) # get public_url
   → get_or_create_page | list_pages
   → plan_static_page_import
   → apply_static_page_import (publish=false by default)
@@ -36,38 +39,49 @@ auth_status
 ## Rules
 
 1. **Discover first** — `list_websites` / `get_public_urls` before mutating.
-2. **Draft then publish** — `upsert_page_html` writes drafts; call `publish_page` only when the user wants live.
-3. **Assets before head** — `upload_asset` first; put returned `public_url` into `cssFileLinks` / `jsFileLinks`.
+2. **Draft then publish** — `upsert_page_html` writes drafts; call
+   `publish_page` only when the user wants live.
+3. **Upload assets first** — use `upload_asset_from_path` for local binary
+   files or `upload_asset` for inline content. Use only the returned
+   `public_url` in HTML or head config.
 4. **HTML modes**
    - `body` (default): HTML is page body only (`source_code`).
-   - `full_html`: full document; system extracts body + `<link>`/`<script>`/`style` into config.
+   - `full_html`: full document; system extracts body and head assets into
+     config.
 5. **Pathnames** — no leading `/`; home page is `""`.
-6. **Do not** inject secrets, `javascript:` URLs, or event-handler attributes for XSS.
+6. **Do not** inject secrets, `javascript:` URLs, or event-handler attributes
+   for XSS.
 7. After publish, always report **site_url** and page **full_url**.
+8. **Never** expose B2 `uploadUrl` or `authorizationToken`; those are
+   internal to the MCP upload flow.
 
 ## Tool map
 
-| Intent | Tool |
-|--------|------|
-| Who am I? | `auth_status` |
-| Sites CRUD | `list_websites`, `get_website`, `create_website`, `update_website` |
-| Pages CRUD | `list_pages`, `get_page`, `get_page_content`, `create_page`, `update_page_meta` |
-| Page lookup | `get_page_by_pathname`, `get_or_create_page` |
-| Static import | `plan_static_page_import`, `apply_static_page_import` |
-| Write HTML | `upsert_page_html` |
-| Draft preview | `get_draft_preview_url` |
-| Go live | `publish_page` |
-| Static files | `upload_asset`, `upload_asset_from_path` |
-| Head CSS/JS | `set_page_assets`, `set_website_assets` |
-| Live links | `get_public_urls` |
-| Diagnostics | `mcp_health` |
+- Who am I? `auth_status`
+- Sites CRUD: `list_websites`, `get_website`, `create_website`,
+  `update_website`
+- Pages CRUD: `list_pages`, `get_page`, `get_page_content`, `create_page`,
+  `update_page_meta`
+- Page lookup: `get_page_by_pathname`, `get_or_create_page`
+- Static import: `plan_static_page_import`, `apply_static_page_import`
+- Write HTML: `upsert_page_html`
+- Draft preview: `get_draft_preview_url`
+- Go live: `publish_page`
+- Static files: `upload_asset`, `upload_asset_from_path`
+- Head CSS/JS: `set_page_assets`, `set_website_assets`
+- Live links: `get_public_urls`
+- Diagnostics: `mcp_health`
 
 ## Head assets shape
 
 ```json
 {
   "cssFileLinks": [{ "href": "https://static.otimififi.com/.../app.css" }],
-  "jsFileLinks": [{ "src": "https://static.otimififi.com/.../app.js", "defer": true, "position": "body_end" }],
+  "jsFileLinks": [{
+    "src": "https://static.otimififi.com/.../app.js",
+    "defer": true,
+    "position": "body_end"
+  }],
   "inlineStyles": [".hero{padding:4rem}"],
   "inlineScripts": [{ "code": "console.log('ok')", "position": "body_end" }]
 }
@@ -78,17 +92,17 @@ auth_status
 
 ## MIME types for upload_asset
 
-| type | ext |
-|------|-----|
-| `text/css` | `.css` |
-| `text/javascript` / `application/javascript` | `.js` |
-| `image/png` `image/jpeg` `image/gif` `image/webp` `image/svg+xml` | matching |
-| `font/woff2` | `.woff2` |
-| `application/json` | `.json` |
+- `text/css`: `.css`
+- `text/javascript` or `application/javascript`: `.js`
+- `image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`:
+  matching image extension
+- `font/woff2`: `.woff2`
+- `application/json`: `.json`
 
 ## Examples
 
 See [examples/landing-from-html.md](examples/landing-from-html.md) and [examples/attach-css-js.md](examples/attach-css-js.md).
+For images in page HTML, see [examples/upload-images.md](examples/upload-images.md).
 
 ## Deeper references
 

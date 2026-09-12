@@ -52,6 +52,10 @@ Upload errors include an `error_code`, `stage`, and `retryable` flag.
 paths inside `OTIMIFIFI_ASSET_ROOTS` (the current working directory by default)
 and returns a SHA-256 hash for verification.
 
+For an image, do not put the local path or a `data:` URL into the final page.
+Upload it first, use `public_url` in `<img src>`, and retry the upload only when
+the returned error is marked `retryable`.
+
 ## Draft Does Not Exist
 
 Draft versions are zero or negative. Use `get_page_content` to inspect a page,
