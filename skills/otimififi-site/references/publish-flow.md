@@ -14,4 +14,8 @@ Live URL:
 - Site: `get_website` → `preview` (custom domain if ready, else `{sld}.default-domain`)
 - Page: `list_pages` → `full_url`
 
-Unpublished drafts are not on the public host until change-version points at a positive release.
+Use `get_draft_preview_url` for unpublished content. A draft URL must not be
+reported as live unless the platform explicitly confirms its public state and
+positive release version. The public-host behavior of version `0` is platform
+configuration, so clients should treat `publicly_accessible: null` as unknown
+and verify after publishing.

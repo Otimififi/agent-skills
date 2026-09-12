@@ -69,6 +69,12 @@ verification, removal, and troubleshooting:
 The short version is to add the MCP server to `~/.codex/config.toml` and export
 `OTIMIFIFI_ACCESS_TOKEN` before starting Codex.
 
+Additional operator references:
+
+- [Response shapes](skills/otimififi-site/references/response-shapes.md)
+- [Troubleshooting](skills/otimififi-site/references/troubleshooting.md)
+- [Verification checklist](skills/otimififi-site/references/verification.md)
+
 ## Claude Code Configuration
 
 ```bash

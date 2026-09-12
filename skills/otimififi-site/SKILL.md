@@ -23,9 +23,12 @@ is the preferred path because it provides typed tools and centralizes auth.
 auth_status
   → create_website | list_websites
   → upload_asset (css/js/images)     # get public_url
-  → create_page | list_pages
+  → get_or_create_page | list_pages
+  → plan_static_page_import
+  → apply_static_page_import (publish=false by default)
   → upsert_page_html (body | full_html)
   → set_page_assets / set_website_assets   # if not embedded in full_html
+  → get_draft_preview_url                  # inspect before publishing
   → publish_page
   → get_public_urls                 # return live links to user
 ```
@@ -48,12 +51,16 @@ auth_status
 |--------|------|
 | Who am I? | `auth_status` |
 | Sites CRUD | `list_websites`, `get_website`, `create_website`, `update_website` |
-| Pages CRUD | `list_pages`, `get_page`, `create_page`, `update_page_meta` |
+| Pages CRUD | `list_pages`, `get_page`, `get_page_content`, `create_page`, `update_page_meta` |
+| Page lookup | `get_page_by_pathname`, `get_or_create_page` |
+| Static import | `plan_static_page_import`, `apply_static_page_import` |
 | Write HTML | `upsert_page_html` |
+| Draft preview | `get_draft_preview_url` |
 | Go live | `publish_page` |
-| Static files | `upload_asset` |
+| Static files | `upload_asset`, `upload_asset_from_path` |
 | Head CSS/JS | `set_page_assets`, `set_website_assets` |
 | Live links | `get_public_urls` |
+| Diagnostics | `mcp_health` |
 
 ## Head assets shape
 
@@ -86,6 +93,9 @@ See [examples/landing-from-html.md](examples/landing-from-html.md) and [examples
 ## Deeper references
 
 - [references/api-map.md](references/api-map.md)
+- [references/response-shapes.md](references/response-shapes.md)
+- [references/troubleshooting.md](references/troubleshooting.md)
+- [references/verification.md](references/verification.md)
 - [references/html-modes.md](references/html-modes.md)
 - [references/assets-and-head.md](references/assets-and-head.md)
 - [references/publish-flow.md](references/publish-flow.md)

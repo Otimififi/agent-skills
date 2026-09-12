@@ -1,6 +1,6 @@
 {
   "name": "otimififi-agent-tools",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Otimififi Agent Skill and MCP server for website building",
   "private": true,
   "license": "MIT",
@@ -9,7 +9,8 @@
     "otimififi-mcp-site": "./mcp-site/bin/otimififi-mcp-site.js"
   },
   "scripts": {
-    "start": "node mcp-site/src/index.js"
+    "start": "node mcp-site/src/index.js",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"

@@ -6,6 +6,7 @@ All requests: `Authorization: Bearer <OTIMIFIFI_ACCESS_TOKEN>`
 |--------|--------|------|
 | Profile | GET | `/api/v1/profile` |
 | Issue token | POST | `/api/v1/access-token` |
+| Draft preview token | GET | `/api/v1/pages/:id/preview-token` |
 | List sites | GET | `/api/v1/websites` |
 | Create site | POST | `/api/v1/websites` |
 | Get/update site | GET/PUT | `/api/v1/websites/:id` |
@@ -17,6 +18,7 @@ All requests: `Authorization: Bearer <OTIMIFIFI_ACCESS_TOKEN>`
 | Commit draft | POST | `/api/v1/pages/:id/drafts/:version/commit` |
 | Set live version | PUT | `/api/v1/pages/:id/change-version` |
 | Prepare upload | POST | `/api/v1/media/prepare` |
+| List media | GET | `/api/v1/media/list?site=:id` |
 | Confirm upload | POST | `/api/v1/media/:asset_id` |
 
 Draft version: `0` or negative integers. Positive versions are immutable releases.

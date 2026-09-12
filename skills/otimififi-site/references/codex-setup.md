@@ -133,11 +133,16 @@ The server exposes:
 - `auth_status`: validate the token and return the current profile.
 - `list_websites`, `get_website`, `create_website`, `update_website`.
 - `list_pages`, `get_page`, `create_page`, `update_page_meta`.
+- `get_page_content`, `get_page_by_pathname`, `get_or_create_page`.
+- `plan_static_page_import`, `apply_static_page_import` (publish is opt-in).
 - `upsert_page_html`: write a draft using `body` or `full_html` mode.
+- `get_draft_preview_url`: create a short-lived signed draft preview.
 - `upload_asset`: upload CSS, JavaScript, images, or fonts.
+- `upload_asset_from_path`: upload an allowed local workspace file.
 - `set_page_assets`, `set_website_assets`: attach head assets.
 - `publish_page`: commit a draft and optionally set it live.
 - `get_public_urls`: return the site and page URLs.
+- `mcp_health`: report configuration, auth, and registered tools.
 
 Use the normal workflow: discover first, write a draft, inspect it, and publish
 only when explicitly requested. See [the publish flow](publish-flow.md).
