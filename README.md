@@ -10,25 +10,36 @@ The repository deliberately keeps the two layers together:
 
 ## Install the Skill
 
-For the public repository:
+### OpenCode
 
 ```bash
-npx skills add https://github.com/Otimififi/agent-skills/tree/main/skills/otimififi-site \
+npx skills add \
+  https://github.com/Otimififi/agent-skills/tree/main/skills/otimififi-site \
   --skill otimififi-site --agent opencode --global --yes
 ```
 
-The explicit `--agent opencode` flag is required for global installation so
-the installer does not select another detected agent that lacks global-scope
-support.
+### Codex CLI
 
-## Run the MCP server
+```bash
+npx skills add \
+  https://github.com/Otimififi/agent-skills/tree/main/skills/otimififi-site \
+  --skill otimififi-site --agent codex --global --yes
+```
 
-The package manager installs dependencies automatically from this GitHub
+Always specify `--agent` for global installation. Without it, the installer
+may select another detected agent that does not support global scope.
+
+## Configure the MCP Server
+
+The MCP server runs over stdio. Codex and other clients start it on demand;
+you do not need to run a long-lived HTTP service.
+
+The package manager installs dependencies automatically from this public GitHub
 repository:
 
 ```bash
 npm exec --yes \
-  --package=git+ssh://git@github.com/otimififi/agent-skills.git \
+  --package=git+https://github.com/Otimififi/agent-skills.git \
   -- otimififi-mcp-site
 ```
 
@@ -48,12 +59,22 @@ OTIMIFIFI_ACCESS_TOKEN=<your access token>
 
 Never commit the access token or put it in page HTML or public assets.
 
-## Claude Code configuration
+## Codex CLI Configuration
+
+See the complete setup guide, including token handling, `config.toml`,
+verification, removal, and troubleshooting:
+
+[Codex CLI setup](skills/otimififi-site/references/codex-setup.md)
+
+The short version is to add the MCP server to `~/.codex/config.toml` and export
+`OTIMIFIFI_ACCESS_TOKEN` before starting Codex.
+
+## Claude Code Configuration
 
 ```bash
 claude mcp add --scope user otimififi-site -- \
   npm exec --yes \
-  --package=git+ssh://git@github.com/otimififi/agent-skills.git \
+  --package=git+https://github.com/Otimififi/agent-skills.git \
   -- otimififi-mcp-site
 ```
 

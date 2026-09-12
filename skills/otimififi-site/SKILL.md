@@ -13,6 +13,10 @@ Use the **otimififi-site MCP** tools (or equivalent REST calls with `Authorizati
 - `OTIMIFIFI_ACCESS_TOKEN` — from `POST /api/v1/access-token` (user settings / profile)
 - Never write the token into page HTML, git, or public assets
 
+For Codex CLI installation, see [the Codex setup guide](references/codex-setup.md).
+The MCP server is optional if the client can call the REST API directly, but it
+is the preferred path because it provides typed tools and centralizes auth.
+
 ## Default closed loop
 
 ```
