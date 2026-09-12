@@ -14,8 +14,12 @@ For the public repository:
 
 ```bash
 npx skills add https://github.com/Otimififi/agent-skills/tree/main/skills/otimififi-site \
-  --skill otimififi-site -g -y
+  --skill otimififi-site --agent opencode --global --yes
 ```
+
+The explicit `--agent opencode` flag is required for global installation so
+the installer does not select another detected agent that lacks global-scope
+support.
 
 ## Run the MCP server
 
