@@ -1,25 +1,20 @@
 # Otimififi Agent Tools
 
-Private GitHub distribution for the Otimififi site-building Agent Skill and
+Public GitHub distribution for the Otimififi site-building Agent Skill and
 MCP server.
 
 The repository deliberately keeps the two layers together:
 
-- `skills/site` teaches an Agent how to use Otimififi site tools.
+- `skills/otimififi-site` teaches an Agent how to use Otimififi site tools.
 - `mcp-site` provides the actual MCP tools and starts over stdio.
 
 ## Install the Skill
 
-For private repository testing:
+For the public repository:
 
 ```bash
-npx skills add git@github.com:otimififi/agent-skills.git --skill site -g -y
-```
-
-When this repository becomes public, the shorter form is:
-
-```bash
-npx skills add otimififi/agent-skills@site -g -y
+npx skills add https://github.com/Otimififi/agent-skills/tree/main/skills/otimififi-site \
+  --skill otimififi-site -g -y
 ```
 
 ## Run the MCP server
@@ -72,7 +67,5 @@ Do not publish it yet.
 
 ## Project status
 
-This repository is private during the validation period. Keep the repository
-private until the MCP tools, authentication flow, and publishing behavior have
-been tested. Make it public only when the user-facing GitHub install commands
-are ready.
+This repository is public. Keep access tokens out of the repository, page HTML,
+and public assets.
